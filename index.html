@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Install My App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- PWA manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2F3BA2"/>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
+    }
+    .store-buttons img {
+      height: 60px;
+      margin: 10px;
+    }
+    #installBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Install Our App</h1>
+
+  <!-- Store Badges -->
+  <div class="store-buttons">
+    <!-- Google Play -->
+    <a href="https://play.google.com/store/apps/details?id=your.package.name" target="_blank">
+      <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+           alt="Get it on Google Play">
+    </a>
+
+    <!-- App Store -->
+    <a href="https://apps.apple.com/app/idXXXXXXXXX" target="_blank">
+      <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+           alt="Download on the App Store">
+    </a>
+  </div>
+
+  <!-- PWA Install Button -->
+  <button id="installBtn">Install Web App</button>
+
+  <script>
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+
+    // Listen for the PWA install prompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
+
+      installBtn.addEventListener('click', () => {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            con
